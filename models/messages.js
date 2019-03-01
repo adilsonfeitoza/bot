@@ -1,9 +1,8 @@
 export default (sequelize, DataType) => {
   const messages = sequelize.define('messages', {
     id: {
-      type: DataType.INTEGER,
+      type: DataType.STRING,
       primaryKey: true,
-      autoIncrement: true,
     },
     conversationId: {
       type: DataType.STRING,
@@ -33,6 +32,14 @@ export default (sequelize, DataType) => {
       allowNull: false,
       validate: {
         notEmpty: true,
+      },
+    },
+  }, {
+    hooks: {
+      /* eslint no-param-reassign: "error" */
+      beforeCreate: (message) => {
+        const newMessage = message
+        newMessage.id = message.to
       },
     },
   })

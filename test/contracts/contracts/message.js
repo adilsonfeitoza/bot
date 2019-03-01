@@ -1,7 +1,6 @@
 describe('Routes messages', () => {
   const { messages } = app.datasource.models
   const defaultMessage = {
-    id: 1,
     conversationId: '7665ada8-3448-4acd-a1b7-d688e68fe9a1',
     timestamp: '2018-11-16T23:30:52.6917722Z',
     from: '36b9f842-ee97-11e8-9443-0242ac120002',
@@ -19,7 +18,7 @@ describe('Routes messages', () => {
   describe('Route GET /messages?conversationId', () => {
     it('should return a list of messages', (done) => {
       const messagesList = Joi.array().items(Joi.object().keys({
-        id: Joi.number(),
+        id: Joi.string(),
         conversationId: Joi.string(),
         timestamp: Joi.date(),
         from: Joi.string(),
@@ -39,7 +38,7 @@ describe('Routes messages', () => {
   describe('Route GET /messages/{id}', () => {
     it('should return a Message', (done) => {
       const Message = Joi.object().keys({
-        id: Joi.number(),
+        id: Joi.string(),
         conversationId: Joi.string(),
         timestamp: Joi.date(),
         from: Joi.string(),
@@ -48,7 +47,7 @@ describe('Routes messages', () => {
       })
 
       request
-        .get('/messages/1')
+        .get('/messages/16edd3b3-3f75-40df-af07-2a3813a79ce9')
         .end((err, res) => {
           joiAssert(res.body, Message)
           done(err)
@@ -59,7 +58,6 @@ describe('Routes messages', () => {
   describe('Route POST /messages', () => {
     it('should create a Message', (done) => {
       const newMessage = {
-        id: 2,
         conversationId: '7665ada8-3448-4acd-a1b7-d688e68fe9a1',
         timestamp: '2018-11-16T23:30:57.5926721Z',
         from: '16edd3b3-3f75-40df-af07-2a3813a79ce9',
@@ -68,7 +66,7 @@ describe('Routes messages', () => {
       }
 
       const Message = Joi.object().keys({
-        id: Joi.number(),
+        id: Joi.string(),
         conversationId: Joi.string(),
         timestamp: Joi.date(),
         from: Joi.string(),
